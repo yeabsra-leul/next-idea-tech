@@ -3,7 +3,6 @@
 // import { APITalentType } from "@/models/talents"
 // import { formatdDate } from "@/utils/date"
 // import { convertBackToFront } from "@/utils/talents"
-import Image from "next/image";
 
 
 
@@ -21,6 +20,7 @@ import { GoLocation as LocationIcon } from "react-icons/go";
 import { talentData as talent } from "@/lib/data";
 import Empty from "@/components/ui/Empty";
 import { formatdDate } from "@/lib/utils";
+import Image from "next/image";
 
 // async function getTalent(publicId: string) {
 //   const host = process.env.NEXT_PUBLIC_API_HOST
