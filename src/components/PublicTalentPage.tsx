@@ -144,7 +144,7 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
                     className="flex items-center gap-4 rounded-md border border-b-[3px] border-r-[3px] border-primary px-3 py-2"
                     key={item.id}
                   >
-                    {/* Remove this image after */}
+                    {/* Remove this image component*/}
                     <Image
                       src={item.icon}
                       alt={item.skill}
