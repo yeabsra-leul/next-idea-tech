@@ -1,10 +1,26 @@
+// // Framework
+// import { unstable_noStore as noStore } from "next/cache"
+// import { APITalentType } from "@/models/talents"
+// import { formatdDate } from "@/utils/date"
+// import { convertBackToFront } from "@/utils/talents"
+import Image from "next/image";
+
+
+
+// // Shared Components
+// import TalentVideoImage from "@/components/talents/video-image"
+// import Icon from "@/components/icons/Icon"
+// import LocationIcon from "@/components/icons/Location"
+// import Empty from "@/components/shared/empty"
+
+
+//Remove these imports
 import { unstable_noStore as noStore } from "next/cache";
 import TalentVideoImage from "@/components/TalentVideoImage";
 import { GoLocation as LocationIcon } from "react-icons/go";
 import { talentData as talent } from "@/lib/data";
 import Empty from "@/components/ui/Empty";
 import { formatdDate } from "@/lib/utils";
-import Image from "next/image";
 
 // async function getTalent(publicId: string) {
 //   const host = process.env.NEXT_PUBLIC_API_HOST
@@ -42,9 +58,9 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
   // const publicId = params.publicId
   // const talent = await getTalent(publicId)
 
-  // if (!talent || !talent.approved) {
-  // return <Empty message="Talent not found" />
-  // }
+  if (!talent || !talent.approved) {
+  return <Empty message="Talent not found" />
+  }
 
   // // Helper to create page view
   // const createPageView = async (pageSlug: string) => {
@@ -64,11 +80,6 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
   // };
 
   // await createPageView(publicId);
-
-
-  if (!talent) {
-    return <Empty message="Talent not found" />;
-  }
 
   return (
     <div className="sm:container">

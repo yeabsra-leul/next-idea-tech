@@ -50,4 +50,5 @@ export interface TalentData {
   hobbies: string;
   videoAskUrl: string;
   profileImage: string;
+  approved:boolean;
 }

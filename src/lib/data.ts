@@ -265,4 +265,5 @@ export const talentData: TalentData = {
   hobbies: "",
   videoAskUrl: "videos/askVideo.mp4",
   profileImage: "/images/profile-image.png",
+  approved:true
 };
