@@ -1,10 +1,23 @@
 import { unstable_noStore as noStore } from "next/cache";
 import TalentVideoImage from "@/components/TalentVideoImage";
 import { GoLocation as LocationIcon } from "react-icons/go";
-import { talentData } from "@/lib/data";
+import { talentData as talent } from "@/lib/data";
 import Empty from "@/components/ui/Empty";
 import { formatdDate } from "@/lib/utils";
 import Image from "next/image";
+
+// async function getTalent(publicId: string) {
+//   const host = process.env.NEXT_PUBLIC_API_HOST
+
+//   const res = await fetch(${host}/talent/public/${publicId})
+
+//   if (!res.ok) {
+//   return null
+//   }
+
+//   const talent = (await res.json()) as APITalentType
+//   return convertBackToFront(talent)
+// }
 
 const Section = ({
   title,
@@ -26,7 +39,34 @@ type PublicTalentPageProps = {
 const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
   noStore();
 
-  if (!talentData) {
+  // const publicId = params.publicId
+  // const talent = await getTalent(publicId)
+
+  // if (!talent || !talent.approved) {
+  // return <Empty message="Talent not found" />
+  // }
+
+  // // Helper to create page view
+  // const createPageView = async (pageSlug: string) => {
+  //   const host = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
+  //   try {
+  //     await fetch(${host}api/page-views, {
+  //     method: 'POST',
+  //     headers: {
+  //     'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ pageSlug }),
+  //     });
+  //   } catch (error) {
+  //     console.error('Error sending page view:', error);
+  //   }
+  // };
+
+  // await createPageView(publicId);
+
+
+  if (!talent) {
     return <Empty message="Talent not found" />;
   }
 
@@ -36,59 +76,59 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
         {/* header */}
         <div className="flex flex-col lg:flex-row gap-6 border-b border-edge px-4 md:px-14 py-6 md:py-16">
           <div className="hidden lg:block">
-            <TalentVideoImage talent={talentData} orientation="vertical" />
+            <TalentVideoImage talent={talent} orientation="vertical" />
           </div>
           <div className="block lg:hidden">
-            <TalentVideoImage talent={talentData} orientation="horizontal" />
+            <TalentVideoImage talent={talent} orientation="horizontal" />
           </div>
           <div className="flex-1">
             <h2 className="text-2xl font-semibold">
-              {talentData.fullName ||
-                talentData.firstName + " " + talentData.lastName}
+              {talent.fullName ||
+                talent.firstName + " " + talent.lastName}
             </h2>
             <div className="mt-2 flex flex-col sm:flex-row sm:justify-between sm:gap-4">
-              <h3 className="font-medium text-primary">{talentData.title}</h3>
+              <h3 className="font-medium text-primary">{talent.title}</h3>
               <div>
-                {talentData.location?.city && (
+                {talent.location?.city && (
                   <div className="flex items-center gap-2 text-sm opacity-75 sm:opacity-100">
                     <LocationIcon width={24} height={24} />{" "}
-                    {talentData.location?.city}, {talentData.location?.country}
+                    {talent.location?.city}, {talent.location?.country}
                   </div>
                 )}
               </div>
             </div>
 
             <div className="mt-4 md:mt-2 flex justify-between">
-              {talentData.overall_experience && (
+              {talent.overall_experience && (
                 <h3 className="font-medium">
-                  {talentData.overall_experience} Years Experience
+                  {talent.overall_experience} Years Experience
                 </h3>
               )}
             </div>
 
             <p
               className="mt-5 font-inter text-sm md:text-base"
-              dangerouslySetInnerHTML={{ __html: talentData.description }}
+              dangerouslySetInnerHTML={{ __html: talent.description }}
             />
           </div>
         </div>
         {/* Content */}
         <div className="flex gap-6 px-4 md:px-14 py-4 lg:py-10">
           <div className="w-full sm:pb-20">
-            {talentData.nitTeamNotes && (
+            {talent.nitTeamNotes && (
               <div className="mb-8">
                 <h3 className="mb-2 font-semibold text-main">
                   NIT Talent Team Notes
                 </h3>
                 <p className="text-xs md:text-sm leading-relaxed">
-                  {talentData.nitTeamNotes}
+                  {talent.nitTeamNotes}
                 </p>
               </div>
             )}
 
             <Section title="Core technologies">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {talentData.stacks?.map((item) => (
+                {talent.stacks?.map((item) => (
                   <div
                     className="flex items-center gap-4 rounded-md border border-b-[3px] border-r-[3px] border-primary px-3 py-2"
                     key={item.id}
@@ -113,7 +153,7 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
             </Section>
             <Section title="Projects highlights">
               <div className="flex flex-col gap-10 ">
-                {talentData.experience?.map((item) => (
+                {talent.experience?.map((item) => (
                   <div key={item.id} className="flex gap-4">
                     <div className="flex w-6 flex-col items-center">
                       <div className="flex h-10 items-center">
@@ -179,7 +219,7 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
 
             <Section title="Education">
               <div className="flex flex-col gap-10 ">
-                {talentData.academicBackgrounds?.map((item) => (
+                {talent.academicBackgrounds?.map((item) => (
                   <div key={item.id} className="flex gap-4">
                     <div className="flex w-6 flex-col items-center">
                       <div className="flex h-10 items-center">
@@ -229,13 +269,13 @@ const PublicTalentPage = async ({ params }: PublicTalentPageProps) => {
                 <h4 className="sm:py-2 font-semibold text-main text-sm sm:text-base">
                   Additional skills
                 </h4>
-                <p className="text-xs sm:text-base">{talentData.otherSkills}</p>
+                <p className="text-xs sm:text-base">{talent.otherSkills}</p>
               </div>
               <div className="mb-4 sm:mb-8 pl-4 sm:pl-8">
                 <h4 className="sm:py-2 font-semibold text-main text-sm sm:text-base">
                   Hobbies
                 </h4>
-                <p className="text-xs sm:text-base">{talentData.hobbies}</p>
+                <p className="text-xs sm:text-base">{talent.hobbies}</p>
               </div>
             </Section>
           </div>
